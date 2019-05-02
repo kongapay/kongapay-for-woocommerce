@@ -3,8 +3,6 @@ jQuery( function( $ ) {
     window.onload = wcKongaPayGatewayFormHandler();
 
     function wcKongaPayGatewayFormHandler() {
-        console.log(kongapay_params.mode)
-        console.log(kongapay_params.testmode)
         KPG.setup({
             "hash": kongapay_params.hash,
             "amount": kongapay_params.amount,
