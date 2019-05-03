@@ -67,6 +67,7 @@ class WC_KongaPay_Gateway extends WC_Payment_Gateway {
                         alt="KongaPay For WooCommerce"
                         height="40px"
                         width="360px"
+                        style="max-height: none; margin-top: 10px;"
                     />'
         ;
 
