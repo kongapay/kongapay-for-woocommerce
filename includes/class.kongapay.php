@@ -226,10 +226,10 @@ class WC_KongaPay_Gateway extends WC_Payment_Gateway {
     public function process_payment( $order_id ) {
 
         $order = wc_get_order( $order_id );
-
+        $redirect_url = $order->get_checkout_payment_url( true );
         return array(
             'result'   => 'success',
-            'redirect' => $order->get_checkout_payment_url( true )
+            'redirect' => $redirect_url
         );
 
     }
@@ -248,14 +248,13 @@ class WC_KongaPay_Gateway extends WC_Payment_Gateway {
     public function verify_transaction()
     {
         @ob_clean();
-
-        if ( !isset( $_REQUEST['merchant_reference'] ) ) {
+        if ( !isset( $_REQUEST['reference'] ) ) {
             wp_redirect( wc_get_page_permalink( 'cart' ) );
 
             exit;
         }
 
-        $reference = trim($_REQUEST['merchant_reference']);
+        $reference = trim($_REQUEST['reference']);
 
         $order_details 	= explode( '_', $reference );
 
@@ -302,7 +301,7 @@ class WC_KongaPay_Gateway extends WC_Payment_Gateway {
 
             $order_total        = $order->get_total();
 
-            $amount_paid        = $response->data->amount / 100;
+            $amount_paid        = $response->data->charge->amount;
 
             $receipt_number       = $response->data->identifier;
 
