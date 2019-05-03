@@ -8,7 +8,7 @@ The plugin works by providing an overlay upon checkout. The overlay is hosted on
 
 Follow the following steps to set up
 
-* Install the plugin
+* Install and activate the plugin
 
 * Navigate to Woocommere > Settings > Payments
 
