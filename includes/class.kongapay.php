@@ -248,13 +248,13 @@ class WC_KongaPay_Gateway extends WC_Payment_Gateway {
     public function verify_transaction()
     {
         @ob_clean();
-        if ( !isset( $_REQUEST['reference'] ) ) {
+        if ( !isset( $_REQUEST['merchant_reference'] ) ) {
             wp_redirect( wc_get_page_permalink( 'cart' ) );
 
             exit;
         }
 
-        $reference = trim($_REQUEST['reference']);
+        $reference = trim($_REQUEST['merchant_reference']);
 
         $order_details 	= explode( '_', $reference );
 
@@ -347,5 +347,4 @@ class WC_KongaPay_Gateway extends WC_Payment_Gateway {
 
         exit;
     }
-
 }
