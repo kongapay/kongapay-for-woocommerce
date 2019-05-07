@@ -1,6 +1,6 @@
 <?php
 /*
- * Plugin Name: KongaPay WooCommerce Payment Gateway
+ * Plugin Name: KongaPay
  * Plugin URI: https://www.kongapay.com/
  * Description: KongaPay Payment Gateway makes it easy for you to accept payment from your customers. Enable payment on your website with Cards, Bank Accounts, KongaPay Wallet, USSD, Visa QR and Pay Attitude.
  * Author: KongaPay Developers
