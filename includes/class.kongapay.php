@@ -23,8 +23,8 @@ class WC_KongaPay_Gateway extends WC_Payment_Gateway {
 
         $this->id = 'kongapay';
         $this->has_fields = true;
-        $this->method_title = 'Kongapay Gateway';
-        $this->method_description = 'Kongapay payment gateway';
+        $this->method_title = 'KongaPay Gateway';
+        $this->method_description = 'Enable payment on your website with Cards, Bank Accounts, KongaPay Wallet, USSD, Visa QR and Pay Attitude.';
 
         $this->supports = array(
             'products'
@@ -62,7 +62,13 @@ class WC_KongaPay_Gateway extends WC_Payment_Gateway {
      */
     public function get_icon() {
 
-        $icon  = '<img src="' . WC_HTTPS::force_https_url( plugins_url( '../assets/images/kongapay-payment-gw.png' , __FILE__ ) ) . '" alt="kongapay-gateway" />';
+        $icon  = '<img
+                        src="' . WC_HTTPS::force_https_url( plugins_url( '../assets/images/kongapay-payment-gw@2x.png' , __FILE__ ) ) . '"
+                        alt="KongaPay For WooCommerce"
+                        height="40px"
+                        width="360px"
+                    />'
+        ;
 
         return apply_filters( 'woocommerce_gateway_icon', $icon, $this->id );
 
@@ -92,7 +98,7 @@ class WC_KongaPay_Gateway extends WC_Payment_Gateway {
                 'title'       => 'Description',
                 'type'        => 'textarea',
                 'description' => 'This controls the description which the user sees during checkout.',
-                'default'     => 'Pay with your card, bank account and mobile money wallet via KongaPay payment gateway.',
+                'default'     => 'Pay with your Cards, Bank Accounts, KongaPay Wallet, USSD, Visa QR and Pay Attitude via KongaPay Payment Gateway.',
             ),
             'testmode' => array(
                 'title'       => 'Test mode',
@@ -103,10 +109,10 @@ class WC_KongaPay_Gateway extends WC_Payment_Gateway {
                 'desc_tip'    => true,
             ),
             'enable_frame' => array(
-                'title'       => 'IFrame',
+                'title'       => 'iframe',
                 'label'       => 'Enable Iframe',
                 'type'        => 'checkbox',
-                'description' => 'Display payment gateway in Iframe or redirect.',
+                'description' => 'Display payment gateway in an iframe or redirect.',
                 'default'     => 'yes',
                 'desc_tip'    => true,
             ),
@@ -220,10 +226,10 @@ class WC_KongaPay_Gateway extends WC_Payment_Gateway {
     public function process_payment( $order_id ) {
 
         $order = wc_get_order( $order_id );
-
+        $redirect_url = $order->get_checkout_payment_url( true );
         return array(
             'result'   => 'success',
-            'redirect' => $order->get_checkout_payment_url( true )
+            'redirect' => $redirect_url
         );
 
     }
@@ -242,7 +248,6 @@ class WC_KongaPay_Gateway extends WC_Payment_Gateway {
     public function verify_transaction()
     {
         @ob_clean();
-
         if ( !isset( $_REQUEST['merchant_reference'] ) ) {
             wp_redirect( wc_get_page_permalink( 'cart' ) );
 
@@ -296,7 +301,7 @@ class WC_KongaPay_Gateway extends WC_Payment_Gateway {
 
             $order_total        = $order->get_total();
 
-            $amount_paid        = $response->data->amount / 100;
+            $amount_paid        = $response->data->charge->amount;
 
             $receipt_number       = $response->data->identifier;
 
@@ -342,5 +347,4 @@ class WC_KongaPay_Gateway extends WC_Payment_Gateway {
 
         exit;
     }
-
 }
